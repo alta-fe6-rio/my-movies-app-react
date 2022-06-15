@@ -8,7 +8,7 @@ class Detail extends Component {
 	render() {
 		return (
 			<Layout>
-				<div className='bg-slate-50 w-full h-full flex'>
+				<div className='w-full h-full flex'>
 					<div className='h-3/4 w-3/4 m-auto grid grid-flow-col bg-slate-400'>
 						<div className='col-span-1 m-auto p-7'>
 							<img src='https://s7.indexmovies.xyz/wp-content/uploads/2022/06/film-as-its-remembered-2022-lk21-d21.jpg' alt='MoviePoster' />

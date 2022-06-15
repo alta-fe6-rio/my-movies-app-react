@@ -2,12 +2,14 @@
 
 import Layout from '../components/Layout';
 import { MovieCard, MovieLoading } from '../components/MovieCard';
-
+import axios from 'axios';
 import React, { Component } from 'react';
+import { IoIosArrowDown } from 'react-icons/io';
 
 class Homepage extends Component {
 	state = {
-		dataMovies: [],
+		data: [],
+		page: 1,
 		loading: true,
 	};
 
@@ -16,68 +18,29 @@ class Homepage extends Component {
 	}
 
 	fetchData() {
-		setTimeout(() => {
-			const dummyData = [
-				{
-					id: 1,
-					img: 'https://s7.indexmovies.xyz/wp-content/uploads/2022/06/film-as-its-remembered-2022-lk21-d21.jpg',
-					title: "As it's Remembered",
-				},
-				{
-					id: 2,
-					img: 'https://s4.indexmovies.xyz/wp-content/uploads/2022/06/film-crossbreed-2019-lk21-d21.jpg',
-					title: 'Crossbreed',
-				},
-				{
-					id: 3,
-					img: 'https://s1.indexmovies.xyz/wp-content/uploads/2022/04/film-9-bullets-2022-lk21-d21.jpg',
-					title: '9 Bullets',
-				},
-				{
-					id: 4,
-					img: 'https://s6.indexmovies.xyz/wp-content/uploads/2022/06/film-moneyboys-2021-lk21-d21.jpg',
-					title: 'Moneyboys',
-				},
-				{
-					id: 5,
-					img: 'https://s3.indexmovies.xyz/wp-content/uploads/2022/06/film-rajawali-2022-lk21-d21.jpg',
-					title: 'Rajawali',
-				},
-				{
-					id: 6,
-					img: 'https://s0.indexmovies.xyz/wp-content/uploads/2022/06/film-baumbacher-syndrome-2019-lk21-d21.jpg',
-					title: 'Baumbacher Syndrome',
-				},
-				{
-					id: 7,
-					img: 'https://s2.indexmovies.xyz/wp-content/uploads/2022/06/film-anne-2021-lk21-d21.jpg',
-					title: 'Anne+',
-				},
-				{
-					id: 8,
-					img: 'https://s4.indexmovies.xyz/wp-content/uploads/2022/06/film-night-blooms-2022-lk21-d21.jpg',
-					title: 'Night Blooms',
-				},
-				{
-					id: 9,
-					img: 'https://s5.indexmovies.xyz/wp-content/uploads/2022/06/film-jurassic-world-dominion-2022-lk21-d21.jpg',
-					title: 'Jurassic World: Dominion',
-				},
-				{
-					id: 10,
-					img: 'https://s4.indexmovies.xyz/wp-content/uploads/2022/06/film-the-spy-who-never-dies-2022-lk21-d21.jpg',
-					title: 'The Spy Who Never Died',
-				},
-			];
-			this.setState({ dataMovies: dummyData }, this.setState({ loading: false }));
-		}, 5000);
+		const newPage = this.state.page + 1;
+		axios
+			.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${this.state.page}`)
+			.then((res) => {
+				const { results } = res.data;
+				const movieClone = this.state.data.slice();
+				movieClone.push(...results);
+				this.setState({ data: movieClone, page: newPage });
+			})
+			.catch((err) => console.log(err))
+			.finally(() => this.setState({ loading: false }));
 	}
 
 	render() {
 		return (
 			<Layout>
 				<div className='grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-3 lg:grid-cols-5 m-5 gap-16 md:gap-5'>
-					{this.state.loading ? <MovieLoading /> : this.state.dataMovies.map((item, index) => <MovieCard key={index} img={item.img} title={item.title} />)}
+					{this.state.loading ? <MovieLoading /> : this.state.data.map((item, index) => <MovieCard key={index} img={item.poster_path} title={item.title} />)}
+				</div>
+				<div className='flex py-4 w-full'>
+					<button onClick={() => this.fetchData()} className='mx-auto text-2xl text-white'>
+						<IoIosArrowDown className='mx-auto text-5xl animate-bounce' />
+					</button>
 				</div>
 			</Layout>
 		);
