@@ -21,7 +21,6 @@ class Detail extends Component {
 		axios
 			.get(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
 			.then((res) => {
-				console.log(res.data);
 				this.setState({ data: res.data });
 			})
 			.catch((err) => {
@@ -34,11 +33,11 @@ class Detail extends Component {
 
 	render() {
 		const { data, loading } = this.state;
-		if (loading) {
-			return <MovieLoading />;
-		} else {
-			return (
-				<Layout>
+		return (
+			<Layout>
+				{loading ? (
+					<MovieLoading />
+				) : (
 					<div className='w-full h-full flex'>
 						<div className='h-full flex' style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${data.backdrop_path})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
 							<div className='h-auto w-3/4 m-auto grid grid-flow-col bg-slate-400 bg-opacity-60'>
@@ -74,9 +73,9 @@ class Detail extends Component {
 							</div>
 						</div>
 					</div>
-				</Layout>
-			);
-		}
+				)}
+			</Layout>
+		);
 	}
 }
 
