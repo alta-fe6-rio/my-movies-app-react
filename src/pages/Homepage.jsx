@@ -23,6 +23,7 @@ class Homepage extends Component {
 		axios
 			.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${this.state.page}`)
 			.then((res) => {
+				document.title = 'Moviely';
 				const { results } = res.data;
 				const movieClone = this.state.data.slice();
 				movieClone.push(...results);

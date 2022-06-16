@@ -21,6 +21,7 @@ class Detail extends Component {
 		axios
 			.get(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
 			.then((res) => {
+				document.title = `Moviely - ${res.data.title}`;
 				this.setState({ data: res.data });
 			})
 			.catch((err) => {
