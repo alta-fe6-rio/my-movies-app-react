@@ -5,6 +5,7 @@ import { MovieCard, MovieLoading } from '../components/MovieCard';
 import axios from 'axios';
 import React, { Component } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
+import { withRouter } from '../utils/navigation';
 
 class Homepage extends Component {
 	state = {
@@ -35,7 +36,7 @@ class Homepage extends Component {
 		return (
 			<Layout>
 				<div className='grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-3 lg:grid-cols-5 m-5 gap-16 md:gap-5'>
-					{this.state.loading ? <MovieLoading /> : this.state.data.map((item, index) => <MovieCard key={index} img={item.poster_path} title={item.title} />)}
+					{this.state.loading ? <MovieLoading /> : this.state.data.map((item, index) => <MovieCard key={index} img={item.poster_path} title={item.title} onClickItem={() => this.props.navigate(`movie/${item.id}`)} />)}
 				</div>
 				<div className='flex py-4 w-full'>
 					<button onClick={() => this.fetchData()} className='mx-auto text-2xl text-white'>
@@ -47,4 +48,4 @@ class Homepage extends Component {
 	}
 }
 
-export default Homepage;
+export default withRouter(Homepage);

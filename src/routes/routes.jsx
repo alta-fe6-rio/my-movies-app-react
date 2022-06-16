@@ -14,9 +14,9 @@ export default class RoutesApp extends Component {
 			<BrowserRouter>
 				<Routes>
 					<Route path='/' element={<Homepage />} />
-					<Route path='/detail' element={<Detail />} />
+					<Route path='/movie/:movie_id' element={<Detail />} />
 					<Route path='/favorites' element={<Favorites />} />
-					<Route path='/hotmovies' element={<HotMovies />} />
+					<Route path='/hot-movies' element={<HotMovies />} />
 					<Route path='*' element={<NotFound />} />
 				</Routes>
 			</BrowserRouter>
