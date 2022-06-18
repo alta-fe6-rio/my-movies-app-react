@@ -5,7 +5,7 @@ import Header from './Header';
 
 const Layout = (props) => {
 	return (
-		<div className='w-full h-screen bg-slate-700 flex flex-col'>
+		<div className='w-full h-screen bg-slate-100 dark:bg-slate-700 flex flex-col'>
 			<Header />
 			<div className='h-full overflow-auto'>{props.children}</div>
 		</div>

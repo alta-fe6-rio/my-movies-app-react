@@ -41,7 +41,7 @@ const Homepage = (props) => {
 				{loading ? <MovieLoading /> : data.map((item, index) => <MovieCard key={index} img={item.poster_path} title={item.title} onClickItem={() => navigate(`movie/${item.id}`)} />)}
 			</div>
 			<div className='flex py-4 w-full'>
-				<button onClick={() => fetchData()} className='mx-auto text-2xl text-white'>
+				<button onClick={() => fetchData()} className='mx-auto text-2xl dark:text-white'>
 					<IoIosArrowDown className='mx-auto text-5xl animate-bounce' />
 				</button>
 			</div>
