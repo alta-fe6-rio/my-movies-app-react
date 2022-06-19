@@ -57,13 +57,13 @@ const Detail = (props) => {
 			) : (
 				<div style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${data.backdrop_path}`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
 					<div className='w-full md:h-screen flex justify-center items-center'>
-						<div className='w-3/4 grid sm:grid-cols-2 gap-4 bg-white/60 border-2 border-slate-800 rounded-lg p-3 shadow-lg shadow-black mt-20'>
+						<div className='w-3/4 grid md:grid-cols-2 gap-4 bg-white/60 border-2 border-slate-800 rounded-lg p-3 shadow-lg shadow-black mt-20'>
 							<div className='flex flex-col justify-center items-center'>
-								<img className='w-3/5 sm:w-4/5 place-self-center' src={data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Image'} alt={data.poster_path} />
+								<img className='w-[80%] place-self-center' src={data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Image'} alt={data.poster_path} />
 								<a
 									href={data.homepage}
 									target='blank'
-									className='bg-slate-300 py-3 rounded-md hover:bg-slate-500 hover:bg-opacity-50 flex justify-center items-center text-center text-sm sm:text-base font-inter  mt-5 bg-opacity-30 border-2 border-slate-300 w-[80%]'>
+									className='bg-slate-300 dark:bg-slate-600 dark:hover:bg-slate-700 py-3 rounded-md hover:bg-slate-500 hover:bg-opacity-50 flex justify-center items-center text-center text-sm sm:text-base font-inter  mt-5 bg-opacity-30 border-2 border-slate-800 dark:border-slate-100 dark:text-white w-[80%]'>
 									<p>Watch Now</p>
 								</a>
 							</div>
@@ -75,7 +75,12 @@ const Detail = (props) => {
 											<span className='font-semibold'>Runtime :</span> {data.runtime + ' mins'}
 										</h1>
 										<h1 className='font-semibold text-base sm:text-lg font-sans'>
-											<span className='font-bold'>Genres :</span> {data.genres.map((genre) => genre.name).join(', ')}
+											<span className='font-bold'>Genres :</span>{' '}
+											{data.genres
+												.map((genre) => {
+													return genre.name;
+												})
+												.join(', ')}
 										</h1>
 										<h1 className='font-semibold text-base sm:text-lg font-sans'>
 											<span className='font-bold'>Release Date :</span> {data.release_date}
@@ -98,15 +103,17 @@ const Detail = (props) => {
 					</div>
 					<div className='py-24 flex justify-center items-center  bg-gradient-to-t from-slate-100 dark:from-slate-700'>
 						<div className='w-full sm:w-3/4 flex flex-col justify-center items-center space-y-8 p-8'>
-							<iframe
-								key={data.videos.results[0].key}
-								className='w-full h-[25vh] sm:h-[70vh]'
-								src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
-								title={data.title}
-								frameBorder='0'
-								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-								allowFullscreen='true'
-							/>
+							{data.videos.results.length === 0 ? null : (
+								<iframe
+									key={data.videos.results[0].key}
+									className='w-full h-[25vh] sm:h-[70vh]'
+									src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
+									title={data.title}
+									frameBorder='0'
+									allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+									allowFullscreen='true'
+								/>
+							)}
 						</div>
 					</div>
 				</div>
@@ -118,7 +125,7 @@ const Detail = (props) => {
 						return (
 							<div key={index} className='flex flex-col justify-center items-center cursor-pointer bg-slate-500 dark:bg-slate-300 w-64 sm:w-80' onClick={() => alert('on development')}>
 								<img src={item.profile_path ? `https://image.tmdb.org/t/p/w500${item.profile_path}` : 'https://via.placeholder.com/500x750?text=No+Image'} alt={item.character} className='h-full w-full' />
-								<h1 className='text-center font-oswald font-medium tracking-widest text-lg text-black py-5'>
+								<h1 className='text-center font-oswald font-medium tracking-widest text-lg text-white dark:text-black py-5'>
 									{item.name}
 									<br /> as <br /> {item.character}
 								</h1>
@@ -134,7 +141,7 @@ const Detail = (props) => {
 						return (
 							<div key={index} className='flex flex-col h-max cursor-pointer'>
 								<a href={`/movie/${item.id}`} className='flex justify-center'>
-									<img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} className='h-full relative' />
+									<img src={item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Image'} alt={item.title} className='h-full relative' />
 								</a>
 							</div>
 						);
