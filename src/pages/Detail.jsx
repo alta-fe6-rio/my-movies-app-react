@@ -22,7 +22,6 @@ const Detail = (props) => {
 		axios
 			.get(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.REACT_APP_API_KEY}&append_to_response=videos,credits`)
 			.then((res) => {
-				console.log(res.data);
 				document.title = `Moviely - ${res.data.title}`;
 				const credit = res.data.credits.cast.slice(0, 6);
 				setCredits(credit);
@@ -70,7 +69,7 @@ const Detail = (props) => {
 							<div className='flex flex-col justify-between'>
 								<div className='font-inter'>
 									<h1 className='text-xl sm:text-3xl font-bold text-center mb-7 font-rubik'>{data.title}</h1>
-									<div className='space-y-4'>
+									<div className='space-y-1'>
 										<h1 className='font-bold text-base sm:text-lg font-sans'>
 											<span className='font-semibold'>Runtime :</span> {data.runtime + ' mins'}
 										</h1>
@@ -103,7 +102,11 @@ const Detail = (props) => {
 					</div>
 					<div className='py-24 flex justify-center items-center  bg-gradient-to-t from-slate-100 dark:from-slate-700'>
 						<div className='w-full sm:w-3/4 flex flex-col justify-center items-center space-y-8 p-8'>
-							{data.videos.results.length === 0 ? null : (
+							{data.videos.results.length === 0 ? (
+								<div className='w-full h-[25vh] sm:h-[70vh] flex justify-center items-center bg-slate-100 dark:bg-slate-600'>
+									<h1 className='text-lg sm:text-2xl font-bold text-black dark:text-white'>No Videos Available</h1>
+								</div>
+							) : (
 								<iframe
 									key={data.videos.results[0].key}
 									className='w-full h-[25vh] sm:h-[70vh]'
