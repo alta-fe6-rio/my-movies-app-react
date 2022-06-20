@@ -8,6 +8,7 @@ import { withRouter } from '../utils/navigation';
 
 const Detail = (props) => {
 	const [data, setData] = useState({});
+	const [videos, setVideos] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [similar, setSimilar] = useState([]);
 	const [credits, setCredits] = useState([]);
@@ -24,7 +25,9 @@ const Detail = (props) => {
 			.then((res) => {
 				document.title = `Moviely - ${res.data.title}`;
 				const credit = res.data.credits.cast.slice(0, 6);
+				const video = res.data.videos.results;
 				setCredits(credit);
+				setVideos(video);
 				setData(res.data);
 			})
 			.catch((err) => {
@@ -75,11 +78,12 @@ const Detail = (props) => {
 										</h1>
 										<h1 className='font-semibold text-base sm:text-lg font-sans'>
 											<span className='font-bold'>Genres :</span>{' '}
-											{data.genres
-												.map((genre) => {
-													return genre.name;
-												})
-												.join(', ')}
+											{data.genres &&
+												data.genres
+													.map((genre) => {
+														return genre.name;
+													})
+													.join(', ')}
 										</h1>
 										<h1 className='font-semibold text-base sm:text-lg font-sans'>
 											<span className='font-bold'>Release Date :</span> {data.release_date}
@@ -100,17 +104,17 @@ const Detail = (props) => {
 							</div>
 						</div>
 					</div>
-					<div className='py-24 flex justify-center items-center  bg-gradient-to-t from-slate-100 dark:from-slate-700'>
+					<div className='py-24 flex justify-center items-center'>
 						<div className='w-full sm:w-3/4 flex flex-col justify-center items-center space-y-8 p-8'>
-							{data.videos.results.length === 0 ? (
-								<div className='w-full h-[25vh] sm:h-[70vh] flex justify-center items-center bg-slate-100 dark:bg-slate-600'>
+							{videos.length === 0 ? (
+								<div className='w-full h-[25vh] sm:h-[70vh] flex justify-center items-center bg-slate-100 dark:bg-slate-600 transition duration-500'>
 									<h1 className='text-lg sm:text-2xl font-bold text-black dark:text-white'>No Videos Available</h1>
 								</div>
 							) : (
 								<iframe
 									key={data.videos.results[0].key}
 									className='w-full h-[25vh] sm:h-[70vh]'
-									src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
+									src={`https://www.youtube.com/embed/${videos[0].key}`}
 									title={data.title}
 									frameBorder='0'
 									allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
@@ -126,7 +130,7 @@ const Detail = (props) => {
 				<div className='grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 md:gap-5 p-0 sm:p-8'>
 					{credits.map((item, index) => {
 						return (
-							<div key={index} className='flex flex-col justify-center items-center cursor-pointer bg-slate-500 dark:bg-slate-300 w-64 sm:w-80' onClick={() => alert('on development')}>
+							<div key={index} className='flex flex-col justify-center items-center cursor-pointer bg-slate-500 dark:bg-slate-300 w-64 sm:w-80 transition duration-500' onClick={() => alert('on development')}>
 								<img src={item.profile_path ? `https://image.tmdb.org/t/p/w500${item.profile_path}` : 'https://via.placeholder.com/500x750?text=No+Image'} alt={item.character} className='h-full w-full' />
 								<h1 className='text-center font-oswald font-medium tracking-widest text-lg text-white dark:text-black py-5'>
 									{item.name}
