@@ -7,7 +7,7 @@ const initialState = {
 
 export const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case 'SET_FAVORITEs':
+		case 'SET_FAVORITES':
 			return {
 				...state,
 				favorites: action.payload,

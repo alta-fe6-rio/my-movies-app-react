@@ -8,8 +8,11 @@ import HotMovies from '../pages/HotMovies';
 import Detail from '../pages/Detail';
 import NotFound from '../pages/404';
 import { ThemeContext } from '../utils/context';
+import { useDispatch } from 'react-redux';
+import { reduxAction } from '../utils/redux/action/action';
 
 const RoutesApp = () => {
+	const dispatch = useDispatch();
 	const [theme, setTheme] = useState('light');
 	const background = useMemo(() => ({ theme, setTheme }), [theme]);
 
@@ -20,6 +23,13 @@ const RoutesApp = () => {
 			document.documentElement.classList.remove('dark');
 		}
 	});
+
+	useEffect(() => {
+		const tempLocal = localStorage.getItem('favMovie');
+		if (tempLocal) {
+			dispatch(reduxAction('SET_FAVORITES', JSON.parse(tempLocal)));
+		}
+	}, []);
 
 	return (
 		<ThemeContext.Provider value={background}>

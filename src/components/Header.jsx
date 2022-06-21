@@ -2,7 +2,7 @@
 
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { BsSun, BsFillMoonStarsFill, BsSearch } from 'react-icons/bs';
+import { BsSun, BsFillMoonStarsFill } from 'react-icons/bs';
 import { ThemeContext } from '../utils/context';
 import { withRouter } from '../utils/navigation';
 
@@ -25,7 +25,7 @@ const Header = (props) => {
 				name='search'
 				placeholder='Search...'
 				onKeyDown={props.onKeyDown}
-				className='text-black focus:outline-none focus:absolute focus:w-full focus:h-full pl-2 py-1 mx-2 sm:mx-8 sm:focus:pl-8 rounded-full focus:rounded-none focus:ml-0 focus:sm:mx-0 w-full text-base italic placeholder:italic dark:bg-slate-500 dark:text-white dark:placeholder:text-white focus:shadow-2xl'
+				className='text-black focus:outline-none focus:absolute focus:w-full focus:h-full pl-4 py-1 mx-2 sm:mx-8 sm:focus:pl-8 rounded-full focus:rounded-none focus:ml-0 focus:sm:mx-0 w-full text-base italic placeholder:italic dark:bg-slate-500 dark:text-white dark:placeholder:text-white focus:shadow-2xl'
 			/>
 			<ul className='flex space-x-5 ml-auto pr-5'>
 				<li>
