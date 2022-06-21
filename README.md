@@ -2,7 +2,7 @@
 
 # Deployment
 
-Deploy : [Move to site](https://my-movies-app-react-alta-fe6-4sjtpqkxf.vercel.app/).
+Deploy : [Move to site](https://my-movies-app-react-alta-fe6-rio.vercel.app/).
 
 # Getting Started with Create React App
 
